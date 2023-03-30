@@ -86,3 +86,27 @@ Completing the project involves several steps:
 6. Create a CodeBuild stage which will build, test, and deploy your code
 
 For more detail about each of these steps, see the project lesson.
+
+## API testing
+
+- Auth API: 
+
+CURL -X POST http://127.0.0.1:5000/auth -H 'Content-Type: application/json' -d '{"email": "test@test.com", "password": "test"}'
+
+Returns:
+
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODE0MDIxNDAsIm5iZiI6MTY4MDE5MjU0MCwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIn0.LcTiqk_fWT4_7VDivTrPqh9cuzkEiXF9ITk3yJ7xYCY"
+}
+
+- Contents API:
+
+CURL -X GET http://127.0.0.1:5000/contents -H 'Content-Type: application/json' -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODE0MDIxNDAsIm5iZiI6MTY4MDE5MjU0MCwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIn0.LcTiqk_fWT4_7VDivTrPqh9cuzkEiXF9ITk3yJ7xYCY"
+
+Returns:
+
+{
+  "email": "test@test.com", 
+  "exp": 1681402140, 
+  "nbf": 1680192540
+}
