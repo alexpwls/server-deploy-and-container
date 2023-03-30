@@ -72,8 +72,6 @@ cd cd0157-Server-Deployment-and-Containerization/
 ├── test_main.py  #ToDo
 └── trust.json     #ToDo 
 ```
-
-aws eks --region us-east-2 update-kubeconfig --name eksctl-project
      
 ## Project Steps
 
@@ -88,10 +86,10 @@ docker build -t myimage .
 docker run --name myContainer --env-file=.env_file -p 80:8080 myimage
 
 3. Create an EKS cluster
-<!--- Creating cluster with name eksctl-project --->
-eksctl create cluster --name eksctl-project --nodes=2 --version=1.22 --instance-types=t3.micro --region=us-east-2
+<!--- Creating cluster with name simple-jwt-api --->
+eksctl create cluster --name simple-jwt-api --nodes=2 --version=1.22 --instance-types=t3.micro --region=us-east-2
 <!--- Check node status after completion --->
-aws eks --region us-east-2 update-kubeconfig --name eksctl-project
+aws eks --region us-east-2 update-kubeconfig --name simple-jwt-api
 kubectl get nodes
 <!--- getting account ID --->
 aws sts get-caller-identity --query Account --output text 
@@ -112,9 +110,9 @@ aws ssm get-parameter --name JWT_SECRET
 
 5. Create a CodePipeline pipeline triggered by GitHub checkins
 <!--- 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 --->
-test
 
 6. Create a CodeBuild stage which will build, test, and deploy your code
+kubectl get services simple-jwt-api -o wide
 
 For more detail about each of these steps, see the project lesson.
 
