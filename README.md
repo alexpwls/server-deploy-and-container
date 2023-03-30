@@ -73,16 +73,45 @@ cd cd0157-Server-Deployment-and-Containerization/
 └── trust.json     #ToDo 
 ```
 
+aws eks --region us-east-2 update-kubeconfig --name eksctl-project
      
 ## Project Steps
 
 Completing the project involves several steps:
 
 1. Write a Dockerfile for a simple Flask API
+<!--- Creating docker image --->
+docker build -t myimage .
+
 2. Build and test the container locally
+<!--- Running docker image --->
+docker run --name myContainer --env-file=.env_file -p 80:8080 myimage
+
 3. Create an EKS cluster
+<!--- Creating cluster with name eksctl-project --->
+eksctl create cluster --name eksctl-project --nodes=2 --version=1.22 --instance-types=t3.micro --region=us-east-2
+<!--- Check node status after completion --->
+aws eks --region us-east-2 update-kubeconfig --name eksctl-project
+kubectl get nodes
+<!--- getting account ID --->
+aws sts get-caller-identity --query Account --output text 
+<!--- Update trust.json with new account ID --->
+<!--- Create the IAM role to deploy on the Kubernetes --->
+aws iam create-role --role-name UdacityFlaskDeployCBKubectlRole --assume-role-policy-document file://trust.json --output text --query 'Role.Arn'
+<!--- Got this return upon succesful creation: --->
+arn:aws:iam::090212595461:role/UdacityFlaskDeployCBKubectlRole
+
+<!--- Attach policy to newly created IAM role --->
+aws iam put-role-policy --role-name UdacityFlaskDeployCBKubectlRole --policy-name eks-describe --policy-document file://iam-role-policy.json
+kubectl get -n kube-system configmap/aws-auth -o yaml > /tmp/aws-auth-patch.yml
+kubectl patch configmap/aws-auth -n kube-system --patch "$(cat /tmp/aws-auth-patch.yml)"
+
 4. Store a secret using AWS Parameter Store
+aws ssm put-parameter --name JWT_SECRET --overwrite --value "myjwtsecret" --type SecureString
+aws ssm get-parameter --name JWT_SECRET
+
 5. Create a CodePipeline pipeline triggered by GitHub checkins
+<!--- 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 --->
 6. Create a CodeBuild stage which will build, test, and deploy your code
 
 For more detail about each of these steps, see the project lesson.
