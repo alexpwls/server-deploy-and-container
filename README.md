@@ -87,7 +87,7 @@ docker run --name myContainer --env-file=.env_file -p 80:8080 myimage
 
 3. Create an EKS cluster
 <!--- Creating cluster with name simple-jwt-api --->
-eksctl create cluster --name simple-jwt-api --nodes=2 --version=1.22 --instance-types=t3.micro --region=us-east-2
+eksctl create cluster --name simple-jwt-api --nodes=2 --version=1.22 --instance-types=t2.medium --region=us-east-2
 <!--- Check node status after completion --->
 aws eks --region us-east-2 update-kubeconfig --name simple-jwt-api
 kubectl get nodes
