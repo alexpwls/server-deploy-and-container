@@ -109,7 +109,9 @@ aws ssm put-parameter --name JWT_SECRET --overwrite --value "myjwtsecret" --type
 aws ssm get-parameter --name JWT_SECRET
 
 5. Create a CodePipeline pipeline triggered by GitHub checkins
-<!--- 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 --->
+
+Stuck on this:
+[Container] 2023/03/31 10:42:45 Phase context status code: COMMAND_EXECUTION_ERROR Message: Error while executing command: kubectl apply -f simple_jwt_api.yml. Reason: exit status 1
 
 6. Create a CodeBuild stage which will build, test, and deploy your code
 kubectl get services simple-jwt-api -o wide
