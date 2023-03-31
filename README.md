@@ -112,6 +112,7 @@ aws ssm get-parameter --name JWT_SECRET
 
 Stuck on this:
 [Container] 2023/03/31 10:42:45 Phase context status code: COMMAND_EXECUTION_ERROR Message: Error while executing command: kubectl apply -f simple_jwt_api.yml. Reason: exit status 1
+Trying again.
 
 6. Create a CodeBuild stage which will build, test, and deploy your code
 kubectl get services simple-jwt-api -o wide
